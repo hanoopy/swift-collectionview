@@ -16,10 +16,10 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
         super.viewDidLoad()
         
         var myFlowLayout: MyFlowLayout = MyFlowLayout()
-        self.collectionView?.setCollectionViewLayout(myFlowLayout, animated: true)
+        self.collectionView.setCollectionViewLayout(myFlowLayout, animated: true)
         
         var pinchRecognizer: UIGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "handlePinch:")
-        self.collectionView?.addGestureRecognizer(pinchRecognizer)
+        self.collectionView.addGestureRecognizer(pinchRecognizer)
         
         self.carImages = ["chevy_small.jpg",
         "mini_small.jpg",
@@ -36,10 +36,10 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
     }
     
     func handlePinch(sender: UIPinchGestureRecognizer) {
-        var layout: MyFlowLayout = self.collectionView?.collectionViewLayout as MyFlowLayout
+        var layout: MyFlowLayout = self.collectionView.collectionViewLayout as MyFlowLayout
         if (sender.state == UIGestureRecognizerState.Began) {
             var initialPinchPoint: CGPoint = sender.locationInView(self.collectionView)
-            var pinchedCellPath: NSIndexPath? = self.collectionView?.indexPathForItemAtPoint(initialPinchPoint)
+            var pinchedCellPath: NSIndexPath? = self.collectionView.indexPathForItemAtPoint(initialPinchPoint)
             layout.currentCellPath = pinchedCellPath
        }
         else if (sender.state == UIGestureRecognizerState.Changed) {
@@ -47,7 +47,7 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
             layout.setCurrentCellScale(sender.scale)
         }
         else {
-            self.collectionView?.performBatchUpdates({
+            self.collectionView.performBatchUpdates({
                 layout.currentCellPath = nil
                 layout.currentCellScale = 1.0
                 }, completion: nil)
@@ -66,7 +66,7 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
         var myCell : MyCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MyCell", forIndexPath: indexPath) as MyCollectionViewCell
         var image : UIImage
         var row : Int = indexPath.row
-        image = UIImage(named: self.carImages[row])
+        image = UIImage(named: self.carImages[row])!
         myCell.imageView.image = image
         return myCell
     }
@@ -75,7 +75,7 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
         var row: Int = indexPath.row
         self.carImages.removeAtIndex(row)
         var deletions: NSArray = [indexPath]
-        self.collectionView?.deleteItemsAtIndexPaths(deletions)
+        self.collectionView.deleteItemsAtIndexPaths(deletions)
     }
     
     override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -90,7 +90,7 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         var row : Int = indexPath.row
-        var image : UIImage = UIImage(named: self.carImages[row])
+        var image : UIImage = UIImage(named: self.carImages[row])!
         return image.size
     }
     
