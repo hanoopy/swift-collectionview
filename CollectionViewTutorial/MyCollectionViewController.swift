@@ -78,6 +78,7 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
         self.collectionView.deleteItemsAtIndexPaths(deletions)
     }
     
+    // ヘッダーを表示する
     override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         var header : MySupplementaryView? = nil
         if (kind == UICollectionElementKindSectionHeader) {
@@ -86,6 +87,11 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
             header?.headerLabel.text = "Car Image Gallery"
         }
         return header!
+    }
+    // ヘッダーのサイズを設定する
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: MyFlowLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        var size = CGSize(width: 400, height: 50)
+        return size
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
